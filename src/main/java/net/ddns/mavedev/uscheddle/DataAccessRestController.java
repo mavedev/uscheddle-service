@@ -3,7 +3,7 @@ package net.ddns.mavedev.uscheddle;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
+import com.fasterxml.jackson.databind.JsonNode;
 
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -31,12 +31,7 @@ public class DataAccessRestController {
 
     @RequestMapping(value = "/generate", method = RequestMethod.POST, consumes = {
             MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE })
-    public @ResponseBody Map<String, String> generate() {
-        return new HashMap<String, String>() {
-            private static final long serialVersionUID = 5276836687399797369L;
-            {
-                put("schedule_id", "10");
-            }
-        };
+    public @ResponseBody JsonNode generate(@RequestBody final JsonNode request) {
+        return request.get("courses");
     }
 }
