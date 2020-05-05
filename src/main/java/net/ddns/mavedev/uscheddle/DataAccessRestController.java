@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @CrossOrigin
-public class TestController {
+public class DataAccessRestController {
     @GetMapping("/")
     public String test() {
         return "<h1>Hello</h1>";
