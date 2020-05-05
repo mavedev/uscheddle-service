@@ -29,7 +29,8 @@ public class DataAccessRestController {
         };
     }
 
-    @RequestMapping(value = "/generate", method = RequestMethod.POST, consumes = { MediaType.APPLICATION_JSON_VALUE })
+    @RequestMapping(value = "/generate", method = RequestMethod.POST, consumes = {
+            MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE })
     public @ResponseBody Map<String, String> generate() {
         return new HashMap<String, String>() {
             private static final long serialVersionUID = 5276836687399797369L;
