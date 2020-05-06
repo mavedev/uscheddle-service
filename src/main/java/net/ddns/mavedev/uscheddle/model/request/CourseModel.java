@@ -22,4 +22,9 @@ public class CourseModel {
 
     @JsonProperty("courseHours")
     private int hours;
+
+    public boolean isValid() {
+        return this.name != null && this.classesType != null && this.instructor != null
+                && this.hours > 0;
+    }
 }

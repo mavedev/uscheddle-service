@@ -3,8 +3,6 @@ package net.ddns.mavedev.uscheddle;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.fasterxml.jackson.databind.JsonNode;
-
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import net.ddns.mavedev.uscheddle.model.request.CourseModel;
+import net.ddns.mavedev.uscheddle.model.request.GenerateRequestModel;
 
 @RestController
 @CrossOrigin
@@ -33,7 +31,7 @@ public class DataAccessRestController {
 
     @RequestMapping(value = "/generate", method = RequestMethod.POST, consumes = {
             MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE })
-    public @ResponseBody CourseModel generate(@RequestBody final JsonNode request) {
-        return new CourseModel("lala", "lolo", "lulu", 10);
+    public @ResponseBody GenerateRequestModel generate(@RequestBody final GenerateRequestModel request) {
+        return request;
     }
 }
