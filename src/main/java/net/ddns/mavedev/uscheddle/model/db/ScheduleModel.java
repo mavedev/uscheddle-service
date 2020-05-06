@@ -13,7 +13,7 @@ import lombok.ToString;
 public class ScheduleModel {
 
     @Id
-    private int id;
+    private String id;
     private String testField;
 
     public ScheduleModel(final String testField) {

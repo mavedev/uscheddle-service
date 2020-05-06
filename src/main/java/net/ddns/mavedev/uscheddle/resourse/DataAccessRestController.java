@@ -44,20 +44,22 @@ public class DataAccessRestController {
     public @ResponseBody ResponseEntity<ResponseModel> generate(
             @RequestBody final GenerateRequestModel request) {
         if (!request.isValid()) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseModel(0));
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(new ResponseModel(null, false));
         }
 
         ResponseModel response = processGenerateRequest(request);
-        if (response.getScheduleId() == 0) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseModel(0));
+        if (response.getScheduleId() == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(new ResponseModel(null, false));
         } else {
-            return ResponseEntity.ok(new ResponseModel(10));
+            return ResponseEntity.ok(response);
         }
     }
 
     private ResponseModel processGenerateRequest(final GenerateRequestModel request) {
         ScheduleModel toBeSaved = new ScheduleModel("test147");
         db.save(toBeSaved);
-        return new ResponseModel(toBeSaved.getId());
+        return new ResponseModel(toBeSaved.getId(), true);
     }
 }

@@ -11,6 +11,9 @@ import lombok.NoArgsConstructor;
 public class ResponseModel {
 
     @JsonProperty("scheduleId")
-    private int scheduleId;
+    private String scheduleId;
+
+    @JsonProperty("editable")
+    private boolean editable;
 
 }
