@@ -32,6 +32,6 @@ public class DataAccessRestController {
     @RequestMapping(value = "/generate", method = RequestMethod.POST, consumes = {
             MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE })
     public @ResponseBody JsonNode generate(@RequestBody final JsonNode request) {
-        return request.get("courses");
+        return null;
     }
 }
