@@ -18,7 +18,7 @@ public class CourseModel {
     private String classesType;
 
     @JsonProperty("courseInstructor")
-    private String instructor;
+    private String[] instructor;
 
     @JsonProperty("courseHours")
     private int hours;
