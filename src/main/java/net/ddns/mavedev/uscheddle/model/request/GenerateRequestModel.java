@@ -25,6 +25,8 @@ public class GenerateRequestModel {
     private int minInGroup;
 
     public boolean isValid() {
-        return true;
+        return Arrays.stream(this.courses).allMatch(i -> i.isValid())
+                && Arrays.stream(this.classrooms).allMatch(i -> i.isValid()) && this.students > 0
+                && this.minInGroup > 0;
     }
 }
