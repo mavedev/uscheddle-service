@@ -16,4 +16,8 @@ public class ClassroomModel {
 
     @JsonProperty("classroomType")
     private String type;
+
+    public boolean isValid() {
+        return this.number != null && this.type != null;
+    }
 }
