@@ -1,5 +1,7 @@
 package net.ddns.mavedev.uscheddle.resourse;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,8 +60,15 @@ public class DataAccessRestController {
     }
 
     private ResponseModel processGenerateRequest(final GenerateRequestModel request) {
-        ScheduleModel toBeSaved = new ScheduleModel("test147");
+        String generatedId = getIdBasedOnCurrentTime();
+        ScheduleModel toBeSaved = new ScheduleModel(generatedId, "test");
         db.save(toBeSaved);
         return new ResponseModel(toBeSaved.getId(), true);
+    }
+
+    private String getIdBasedOnCurrentTime() {
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MMdd-HHmm-ssSS");
+        LocalDateTime now = LocalDateTime.now();
+        return dtf.format(now);
     }
 }
