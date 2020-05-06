@@ -2,9 +2,13 @@ package net.ddns.mavedev.uscheddle;
 
 import java.util.HashMap;
 import java.util.Map;
-
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.exc.InvalidFormatException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,7 +22,8 @@ import net.ddns.mavedev.uscheddle.model.request.GenerateRequestModel;
 @CrossOrigin
 public class DataAccessRestController {
     @RequestMapping(value = "/schedule/{id}", method = RequestMethod.GET)
-    public @ResponseBody Map<String, String> getSchedule(@PathVariable(value = "id") final String id) {
+    public @ResponseBody Map<String, String> getSchedule(
+            @PathVariable(value = "id") final String id) {
         return new HashMap<String, String>() {
             private static final long serialVersionUID = 5276836687399797368L;
             {
@@ -29,9 +34,14 @@ public class DataAccessRestController {
         };
     }
 
-    @RequestMapping(value = "/generate", method = RequestMethod.POST, consumes = {
-            MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE })
-    public @ResponseBody GenerateRequestModel generate(@RequestBody final GenerateRequestModel request) {
-        return request;
+    @RequestMapping(value = "/generate", method = RequestMethod.POST,
+            consumes = {MediaType.APPLICATION_JSON_VALUE},
+            produces = {MediaType.APPLICATION_JSON_VALUE})
+    public @ResponseBody ResponseEntity<GenerateRequestModel> generate(
+            @RequestBody final GenerateRequestModel request) {
+        if (!request.isValid()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(request);
+        }
+        return ResponseEntity.ok(request);
     }
 }
