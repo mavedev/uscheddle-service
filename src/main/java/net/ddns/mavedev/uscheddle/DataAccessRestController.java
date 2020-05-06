@@ -37,8 +37,19 @@ public class DataAccessRestController {
             produces = {MediaType.APPLICATION_JSON_VALUE})
     public @ResponseBody ResponseEntity<ResponseModel> generate(
             @RequestBody final GenerateRequestModel request) {
-        return !request.isValid()
-                ? ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseModel(0))
-                : ResponseEntity.ok(new ResponseModel(10));
+        if (!request.isValid()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseModel(0));
+        }
+
+        ResponseModel response = processGenerateRequest(request);
+        if (response.getScheduleId() == 0) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseModel(0));
+        } else {
+            return ResponseEntity.ok(new ResponseModel(10));
+        }
+    }
+
+    private ResponseModel processGenerateRequest(final GenerateRequestModel request) {
+        return new ResponseModel();
     }
 }
