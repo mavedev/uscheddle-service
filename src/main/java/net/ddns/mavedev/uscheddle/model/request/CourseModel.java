@@ -2,33 +2,24 @@ package net.ddns.mavedev.uscheddle.model.request;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import lombok.Getter;
-import lombok.Setter;
-
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class CourseModel {
-    @Getter
-    @Setter
-    @Autowired
+
     @JsonProperty("courseName")
     private String name;
 
-    @Getter
-    @Setter
-    @Autowired
     @JsonProperty("courseClassesType")
     private String classesType;
 
-    @Getter
-    @Setter
-    @Autowired
-    @JsonProperty("courseInstaructor")
+    @JsonProperty("courseInstructor")
     private String instructor;
 
-    @Getter
-    @Setter
-    @Autowired
     @JsonProperty("courseHours")
     private int hours;
 }

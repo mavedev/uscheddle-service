@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import net.ddns.mavedev.uscheddle.model.request.CourseModel;
+
 @RestController
 @CrossOrigin
 public class DataAccessRestController {
@@ -31,7 +33,7 @@ public class DataAccessRestController {
 
     @RequestMapping(value = "/generate", method = RequestMethod.POST, consumes = {
             MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE })
-    public @ResponseBody JsonNode generate(@RequestBody final JsonNode request) {
-        return null;
+    public @ResponseBody CourseModel generate(@RequestBody final JsonNode request) {
+        return new CourseModel("lala", "lolo", "lulu", 10);
     }
 }
