@@ -1,5 +1,6 @@
 package net.ddns.mavedev.uscheddle.model.request;
 
+import java.util.Arrays;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.AllArgsConstructor;
@@ -22,4 +23,8 @@ public class GenerateRequestModel {
 
     @JsonProperty("minInGroup")
     private int minInGroup;
+
+    public boolean isValid() {
+        return true;
+    }
 }
