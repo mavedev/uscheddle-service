@@ -1,7 +1,8 @@
-package net.ddns.mavedev.uscheddle;
+package net.ddns.mavedev.uscheddle.resourse;
 
 import java.util.HashMap;
 import java.util.Map;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -12,13 +13,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-
+import net.ddns.mavedev.uscheddle.model.db.ScheduleModel;
 import net.ddns.mavedev.uscheddle.model.request.GenerateRequestModel;
 import net.ddns.mavedev.uscheddle.model.response.ResponseModel;
+import net.ddns.mavedev.uscheddle.repository.SchedulesRepository;
 
 @RestController
 @CrossOrigin
 public class DataAccessRestController {
+
+    @Autowired
+    private SchedulesRepository db;
+
     @RequestMapping(value = "/schedule/{id}", method = RequestMethod.GET)
     public @ResponseBody Map<String, String> getSchedule(
             @PathVariable(value = "id") final String id) {
@@ -50,6 +56,8 @@ public class DataAccessRestController {
     }
 
     private ResponseModel processGenerateRequest(final GenerateRequestModel request) {
-        return new ResponseModel();
+        ScheduleModel toBeSaved = new ScheduleModel("test147");
+        db.save(toBeSaved);
+        return new ResponseModel(toBeSaved.getId());
     }
 }
