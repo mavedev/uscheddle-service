@@ -78,7 +78,6 @@ public class DataAccessRestController {
         }
 
         ResponseModel response = null;
-        System.out.println(request.getSchedule());
         try {
             response = processUpdateRequest(request);
         } catch (NoSuchElementException ex) {
