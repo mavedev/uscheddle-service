@@ -32,12 +32,12 @@ public class DataAccessRestController {
     public @ResponseBody ResponseEntity<ResponseModel> create(
             @RequestBody final GenerateRequestModel request) {
         if (!request.isValid()) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseModel());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ResponseModel.empty());
         }
 
         ResponseModel response = processGenerateRequest(request);
         if (!response.isValid()) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseModel());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ResponseModel.empty());
         } else {
             return ResponseEntity.ok(response);
         }
@@ -48,7 +48,7 @@ public class DataAccessRestController {
             @PathVariable(value = "id") final String id) {
         ScheduleModel schedule = db.findById(id).get();
         if (schedule == null) {
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new ResponseModel());
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(ResponseModel.empty());
         } else {
             return ResponseEntity.ok(ResponseModel.fromScheduleModel(schedule));
         }
@@ -60,7 +60,7 @@ public class DataAccessRestController {
     public @ResponseBody ResponseEntity<ResponseModel> update(
             @RequestBody final UpdateRequestModel request) {
         if (!request.isValid()) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseModel());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ResponseModel.empty());
         }
         return null;
     }
@@ -75,7 +75,7 @@ public class DataAccessRestController {
         final ScheduleModel updatedModel = request.getSchedule();
         ScheduleModel toBeUpdated = db.findById(updatedModel.getId()).get();
         if (toBeUpdated == null) {
-            return new ResponseModel();
+            return ResponseModel.empty();
         } else {
             updatedModel.setOwnerId(toBeUpdated.getOwnerId());
             ScheduleModel check = db.save(updatedModel);

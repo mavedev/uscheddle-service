@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
 import net.ddns.mavedev.uscheddle.model.db.ScheduleModel;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
 public class ResponseModel {
 
@@ -30,6 +29,9 @@ public class ResponseModel {
     @JsonProperty("sat")
     private String[] sat = new String[6];
 
+    private ResponseModel() {
+    }
+
     public static ResponseModel fromScheduleModel(final ScheduleModel schedule) {
         ResponseModel response = new ResponseModel();
         response.id = schedule.getId();
@@ -41,6 +43,10 @@ public class ResponseModel {
         response.fri = schedule.getFri();
         response.sat = schedule.getSat();
         return response;
+    }
+
+    public static ResponseModel empty() {
+        return new ResponseModel();
     }
 
     public boolean isValid() {
