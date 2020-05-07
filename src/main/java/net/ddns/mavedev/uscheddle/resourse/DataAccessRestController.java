@@ -68,12 +68,17 @@ public class DataAccessRestController {
             consumes = {MediaType.APPLICATION_JSON_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE})
     public @ResponseBody ResponseEntity<ResponseModel> update(
-            @RequestBody final UpdateRequestModel request) {
+            @RequestBody final UpdateRequestModel request,
+            @PathVariable(value = "id") final String id) {
+        if (request != null) {
+            request.getSchedule().setId(id);
+        }
         if (!request.isValid()) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ResponseModel.empty());
         }
 
         ResponseModel response = null;
+        System.out.println(request.getSchedule());
         try {
             response = processUpdateRequest(request);
         } catch (NoSuchElementException ex) {
