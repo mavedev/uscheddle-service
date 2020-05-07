@@ -76,7 +76,7 @@ public class DataAccessRestController {
         try {
             response = processUpdateRequest(request);
         } catch (NoSuchElementException ex) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ResponseModel.empty());
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(ResponseModel.empty());
         } catch (SecurityException ex) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body(ResponseModel.empty());
         }
