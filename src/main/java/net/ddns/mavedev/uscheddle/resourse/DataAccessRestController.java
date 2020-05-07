@@ -53,6 +53,13 @@ public class DataAccessRestController {
         }
     }
 
+    @RequestMapping(value = "/edit/{id}", method = RequestMethod.PUT,
+            consumes = {MediaType.APPLICATION_JSON_VALUE},
+            produces = {MediaType.APPLICATION_JSON_VALUE})
+    public @ResponseBody ResponseEntity<ResponseModel> update() {
+        return null;
+    }
+
     private ResponseModel processGenerateRequest(final GenerateRequestModel request) {
         ScheduleModel toBeSaved = getDummySchedule();
         db.save(toBeSaved);
