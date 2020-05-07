@@ -17,4 +17,8 @@ public class UpdateRequestModel {
     @JsonProperty("senderId")
     private String senderId;
 
+    public boolean isValid() {
+        return this.schedule.isValid() && senderId != null;
+    }
+
 }
