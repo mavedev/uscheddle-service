@@ -41,7 +41,7 @@ public class DataAccessRestController {
         if (!response.isValid()) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ResponseModel.empty());
         } else {
-            return ResponseEntity.ok(response);
+            return ResponseEntity.ok(response.editable());
         }
     }
 
