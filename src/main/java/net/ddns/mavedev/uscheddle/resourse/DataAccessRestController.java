@@ -71,7 +71,21 @@ public class DataAccessRestController {
         if (!request.isValid()) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ResponseModel.empty());
         }
-        return null;
+
+        ResponseModel response = null;
+        try {
+            response = processUpdateRequest(request);
+        } catch (NoSuchElementException ex) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ResponseModel.empty());
+        } catch (SecurityException ex) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(ResponseModel.empty());
+        }
+
+        if (!response.isValid()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ResponseModel.empty());
+        } else {
+            return ResponseEntity.ok(response.editable());
+        }
     }
 
     private ResponseModel processGenerateRequest(final GenerateRequestModel request) {
@@ -80,16 +94,18 @@ public class DataAccessRestController {
         return ResponseModel.fromScheduleModel(toBeSaved);
     }
 
-    private ResponseModel processUpdateRequest(final UpdateRequestModel request) {
+    private ResponseModel processUpdateRequest(final UpdateRequestModel request)
+            throws SecurityException, NoSuchElementException {
         final ScheduleModel updatedModel = request.getSchedule();
         ScheduleModel toBeUpdated = db.findById(updatedModel.getId()).get();
-        if (toBeUpdated == null) {
-            return ResponseModel.empty();
-        } else {
-            updatedModel.setOwnerId(toBeUpdated.getOwnerId());
-            ScheduleModel check = db.save(updatedModel);
-            return ResponseModel.fromScheduleModel(check);
+
+        if (!updatedModel.getOwnerId().equals(toBeUpdated.getOwnerId())) {
+            throw new SecurityException();
         }
+
+        updatedModel.setOwnerId(toBeUpdated.getOwnerId());
+        ScheduleModel updatedResult = db.save(updatedModel);
+        return ResponseModel.fromScheduleModel(updatedResult);
     }
 
     private String getIdBasedOnCurrentTime() {
