@@ -88,6 +88,13 @@ public class DataAccessRestController {
         }
     }
 
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE,
+            consumes = {MediaType.APPLICATION_JSON_VALUE},
+            produces = {MediaType.APPLICATION_JSON_VALUE})
+    public @ResponseBody ResponseEntity<ResponseModel> delete() {
+        return null;
+    }
+
     private ResponseModel processGenerateRequest(final GenerateRequestModel request) {
         ScheduleModel toBeSaved = getDummySchedule();
         db.save(toBeSaved);
