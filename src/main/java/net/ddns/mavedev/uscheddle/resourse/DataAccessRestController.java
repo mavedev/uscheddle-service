@@ -30,10 +30,9 @@ public class DataAccessRestController {
             @PathVariable(value = "id") final String id) {
         ScheduleModel schedule = db.findById(id).get();
         if (schedule == null) {
-            return ResponseEntity.status(HttpStatus.NO_CONTENT)
-                    .body(new ResponseModel(null, false));
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new ResponseModel(null));
         } else {
-            return ResponseEntity.ok(new ResponseModel(schedule, true));
+            return ResponseEntity.ok(new ResponseModel(schedule));
         }
     }
 
@@ -43,14 +42,12 @@ public class DataAccessRestController {
     public @ResponseBody ResponseEntity<ResponseModel> generate(
             @RequestBody final GenerateRequestModel request) {
         if (!request.isValid()) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(new ResponseModel(null, false));
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseModel(null));
         }
 
         ResponseModel response = processGenerateRequest(request);
         if (response.getSchedule() == null) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(new ResponseModel(null, false));
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseModel(null));
         } else {
             return ResponseEntity.ok(response);
         }
@@ -60,7 +57,7 @@ public class DataAccessRestController {
         String generatedId = getIdBasedOnCurrentTime();
         ScheduleModel toBeSaved = new ScheduleModel(generatedId, "testOwner", "testName");
         db.save(toBeSaved);
-        return new ResponseModel(toBeSaved, true);
+        return new ResponseModel(toBeSaved);
     }
 
     private String getIdBasedOnCurrentTime() {
