@@ -57,7 +57,10 @@ public class DataAccessRestController {
             return ResponseEntity.status(HttpStatus.NO_CONTENT).body(ResponseModel.empty());
         }
 
-        return ResponseEntity.ok(ResponseModel.fromScheduleModel(schedule));
+        ResponseModel response = ResponseModel.fromScheduleModel(schedule);
+        return schedule.getOwnerId().equals(request.getSenderId())
+                ? ResponseEntity.ok(response.editable())
+                : ResponseEntity.ok(response);
     }
 
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.PUT,
