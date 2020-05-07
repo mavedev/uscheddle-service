@@ -44,8 +44,7 @@ public class ScheduleModel {
     }
 
     public boolean isValid() {
-        return Stream.of(id, ownerId, name, mon, tue, wed, thu, fri, sat)
-                .noneMatch(Objects::isNull);
+        return Stream.of(id, name, mon, tue, wed, thu, fri, sat).noneMatch(Objects::isNull);
     }
 
 }

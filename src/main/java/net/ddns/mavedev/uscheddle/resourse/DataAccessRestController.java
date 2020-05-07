@@ -59,13 +59,19 @@ public class DataAccessRestController {
             produces = {MediaType.APPLICATION_JSON_VALUE})
     public @ResponseBody ResponseEntity<ResponseModel> update(
             @RequestBody final UpdateRequestModel request) {
-        return null;
+        if (!request.isValid()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseModel(null));
+        }
     }
 
     private ResponseModel processGenerateRequest(final GenerateRequestModel request) {
         ScheduleModel toBeSaved = getDummySchedule();
         db.save(toBeSaved);
         return new ResponseModel(toBeSaved);
+    }
+
+    private ResponseModel processUpdateRequest(final UpdateRequestModel request) {
+        return null;
     }
 
     private String getIdBasedOnCurrentTime() {
