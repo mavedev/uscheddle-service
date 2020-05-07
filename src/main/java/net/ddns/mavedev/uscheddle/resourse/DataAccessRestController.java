@@ -25,7 +25,9 @@ public class DataAccessRestController {
     @Autowired
     private SchedulesRepository db;
 
-    @RequestMapping(value = "/schedule/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/schedule/{id}", method = RequestMethod.GET,
+            consumes = {MediaType.APPLICATION_JSON_VALUE},
+            produces = {MediaType.APPLICATION_JSON_VALUE})
     public @ResponseBody ResponseEntity<ResponseModel> getSchedule(
             @PathVariable(value = "id") final String id) {
         ScheduleModel schedule = db.findById(id).get();
