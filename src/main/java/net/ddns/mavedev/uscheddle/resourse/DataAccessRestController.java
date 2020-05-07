@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import net.ddns.mavedev.uscheddle.model.db.ScheduleModel;
-import net.ddns.mavedev.uscheddle.model.request.GenerateRequestModel;
+import net.ddns.mavedev.uscheddle.model.request.create.GenerateRequestModel;
 import net.ddns.mavedev.uscheddle.model.response.ResponseModel;
 import net.ddns.mavedev.uscheddle.repository.SchedulesRepository;
 
