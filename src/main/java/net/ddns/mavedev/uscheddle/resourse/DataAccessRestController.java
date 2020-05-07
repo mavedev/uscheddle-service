@@ -2,7 +2,6 @@ package net.ddns.mavedev.uscheddle.resourse;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.HashMap;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -28,16 +27,9 @@ public class DataAccessRestController {
     private SchedulesRepository db;
 
     @RequestMapping(value = "/schedule/{id}", method = RequestMethod.GET)
-    public @ResponseBody Map<String, String> getSchedule(
+    public @ResponseBody ResponseEntity<ResponseModel> getSchedule(
             @PathVariable(value = "id") final String id) {
-        return new HashMap<String, String>() {
-            private static final long serialVersionUID = 5276836687399797368L;
-            {
-                put("testKey1", "testValue1");
-                put("testKey2", "testValue2");
-                put("testKey3", "testValue3");
-            }
-        };
+        // db.findById(id);
     }
 
     @RequestMapping(value = "/generate", method = RequestMethod.POST,
