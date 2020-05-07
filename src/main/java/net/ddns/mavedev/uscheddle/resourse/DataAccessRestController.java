@@ -2,7 +2,6 @@ package net.ddns.mavedev.uscheddle.resourse;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -29,7 +28,13 @@ public class DataAccessRestController {
     @RequestMapping(value = "/schedule/{id}", method = RequestMethod.GET)
     public @ResponseBody ResponseEntity<ResponseModel> getSchedule(
             @PathVariable(value = "id") final String id) {
-        // db.findById(id);
+        ScheduleModel schedule = db.findById(id).get();
+        if (schedule == null) {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT)
+                    .body(new ResponseModel(null, false));
+        } else {
+            return ResponseEntity.ok(new ResponseModel(schedule.getId(), true));
+        }
     }
 
     @RequestMapping(value = "/generate", method = RequestMethod.POST,
