@@ -16,6 +16,15 @@ public class ScheduleModel {
 
     @Id
     private String id;
-    private String testField;
+    private String[] mon = new String[6];
+    private String[] tue = new String[6];
+    private String[] wed = new String[6];
+    private String[] thu = new String[6];
+    private String[] fri = new String[6];
+    private String[] sat = new String[6];
+
+    public ScheduleModel(final String id) {
+        this.id = id;
+    }
 
 }
