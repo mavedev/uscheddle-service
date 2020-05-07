@@ -5,7 +5,6 @@ import java.util.stream.Stream;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import net.ddns.mavedev.uscheddle.model.db.ScheduleModel;
 
 @Data
@@ -16,6 +15,8 @@ public class ResponseModel {
     private String id;
     @JsonProperty("name")
     private String name;
+    @JsonProperty("editable")
+    private boolean isEditable;
     @JsonProperty("mon")
     private String[] mon = new String[6];
     @JsonProperty("tue")
@@ -47,6 +48,11 @@ public class ResponseModel {
 
     public static ResponseModel empty() {
         return new ResponseModel();
+    }
+
+    public ResponseModel editable() {
+        this.isEditable = true;
+        return this;
     }
 
     public boolean isValid() {
