@@ -54,8 +54,7 @@ public class DataAccessRestController {
     }
 
     private ResponseModel processGenerateRequest(final GenerateRequestModel request) {
-        String generatedId = getIdBasedOnCurrentTime();
-        ScheduleModel toBeSaved = new ScheduleModel(generatedId, "testOwner", "testName");
+        ScheduleModel toBeSaved = getDummySchedule();
         db.save(toBeSaved);
         return new ResponseModel(toBeSaved);
     }
@@ -64,5 +63,10 @@ public class DataAccessRestController {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MMdd-HHmm-ssSS");
         LocalDateTime now = LocalDateTime.now();
         return dtf.format(now);
+    }
+
+    private ScheduleModel getDummySchedule() {
+        String generatedId = getIdBasedOnCurrentTime();
+        return new ScheduleModel(generatedId, "dummyOwner", "dummyName");
     }
 }
