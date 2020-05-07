@@ -12,6 +12,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class GenerateRequestModel {
 
+    @JsonProperty("name")
+    private String name;
+
     @JsonProperty("courses")
     private CourseModel[] courses;
 
