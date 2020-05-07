@@ -25,18 +25,17 @@ public class DataAccessRestController {
     @Autowired
     private SchedulesRepository db;
 
-    @RequestMapping(value = "/schedule/{id}", method = RequestMethod.GET,
-            consumes = {MediaType.APPLICATION_JSON_VALUE},
-            produces = {MediaType.APPLICATION_JSON_VALUE})
+    @RequestMapping(value = "/schedule/{id}", method = RequestMethod.GET)
     public @ResponseBody ResponseEntity<ResponseModel> getSchedule(
             @PathVariable(value = "id") final String id) {
         ScheduleModel schedule = db.findById(id).get();
         if (schedule == null) {
-            return ResponseEntity.status(HttpStatus.NO_CONTENT)
-                    .body(new ResponseModel(null, false));
+            // return ResponseEntity.status(HttpStatus.NO_CONTENT)
+            // .body(new ResponseModel(null, false));
         } else {
-            return ResponseEntity.ok(new ResponseModel(schedule.getId(), true));
+            // return ResponseEntity.ok(new ResponseModel(schedule, true));
         }
+        return null;
     }
 
     @RequestMapping(value = "/generate", method = RequestMethod.POST,
@@ -50,7 +49,7 @@ public class DataAccessRestController {
         }
 
         ResponseModel response = processGenerateRequest(request);
-        if (response.getScheduleId() == null) {
+        if (response.getSchedule() == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(new ResponseModel(null, false));
         } else {
@@ -62,7 +61,7 @@ public class DataAccessRestController {
         String generatedId = getIdBasedOnCurrentTime();
         ScheduleModel toBeSaved = new ScheduleModel(generatedId, "testOwner", "testName");
         db.save(toBeSaved);
-        return new ResponseModel(toBeSaved.getId(), true);
+        return new ResponseModel(toBeSaved, true);
     }
 
     private String getIdBasedOnCurrentTime() {

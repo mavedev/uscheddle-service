@@ -4,14 +4,15 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import net.ddns.mavedev.uscheddle.model.db.ScheduleModel;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class ResponseModel {
 
-    @JsonProperty("scheduleId")
-    private String scheduleId;
+    @JsonProperty("scheduleData")
+    private ScheduleModel schedule;
 
     @JsonProperty("editable")
     private boolean editable;
