@@ -2,6 +2,7 @@ package net.ddns.mavedev.uscheddle.resourse;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.NoSuchElementException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import net.ddns.mavedev.uscheddle.model.db.ScheduleModel;
 import net.ddns.mavedev.uscheddle.model.request.create.GenerateRequestModel;
+import net.ddns.mavedev.uscheddle.model.request.read.ReadRequestModel;
 import net.ddns.mavedev.uscheddle.model.request.update.UpdateRequestModel;
 import net.ddns.mavedev.uscheddle.model.response.ResponseModel;
 import net.ddns.mavedev.uscheddle.repository.SchedulesRepository;
@@ -43,15 +45,19 @@ public class DataAccessRestController {
         }
     }
 
-    @RequestMapping(value = "/schedule/{id}", method = RequestMethod.GET)
-    public @ResponseBody ResponseEntity<ResponseModel> read(
+    @RequestMapping(value = "/schedule/{id}", method = RequestMethod.GET,
+            consumes = {MediaType.APPLICATION_JSON_VALUE},
+            produces = {MediaType.APPLICATION_JSON_VALUE})
+    public @ResponseBody ResponseEntity<ResponseModel> read(@RequestBody ReadRequestModel request,
             @PathVariable(value = "id") final String id) {
-        ScheduleModel schedule = db.findById(id).get();
-        if (schedule == null) {
+        ScheduleModel schedule = null;
+        try {
+            schedule = db.findById(id).get();
+        } catch (NoSuchElementException ex) {
             return ResponseEntity.status(HttpStatus.NO_CONTENT).body(ResponseModel.empty());
-        } else {
-            return ResponseEntity.ok(ResponseModel.fromScheduleModel(schedule));
         }
+
+        return ResponseEntity.ok(ResponseModel.fromScheduleModel(schedule));
     }
 
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.PUT,
