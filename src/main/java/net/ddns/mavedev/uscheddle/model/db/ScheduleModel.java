@@ -16,6 +16,8 @@ public class ScheduleModel {
 
     @Id
     private String id;
+    private String ownerId;
+    private String name;
     private String[] mon = new String[6];
     private String[] tue = new String[6];
     private String[] wed = new String[6];
