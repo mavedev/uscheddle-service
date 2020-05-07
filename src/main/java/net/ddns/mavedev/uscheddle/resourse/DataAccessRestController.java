@@ -32,12 +32,12 @@ public class DataAccessRestController {
     public @ResponseBody ResponseEntity<ResponseModel> create(
             @RequestBody final GenerateRequestModel request) {
         if (!request.isValid()) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseModel(null));
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseModel());
         }
 
         ResponseModel response = processGenerateRequest(request);
-        if (response.getSchedule() == null) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseModel(null));
+        if (!response.isValid()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseModel());
         } else {
             return ResponseEntity.ok(response);
         }
@@ -48,9 +48,9 @@ public class DataAccessRestController {
             @PathVariable(value = "id") final String id) {
         ScheduleModel schedule = db.findById(id).get();
         if (schedule == null) {
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new ResponseModel(null));
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new ResponseModel());
         } else {
-            return ResponseEntity.ok(new ResponseModel(schedule));
+            return ResponseEntity.ok(ResponseModel.fromScheduleModel(schedule));
         }
     }
 
@@ -60,18 +60,27 @@ public class DataAccessRestController {
     public @ResponseBody ResponseEntity<ResponseModel> update(
             @RequestBody final UpdateRequestModel request) {
         if (!request.isValid()) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseModel(null));
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseModel());
         }
+        return null;
     }
 
     private ResponseModel processGenerateRequest(final GenerateRequestModel request) {
         ScheduleModel toBeSaved = getDummySchedule();
         db.save(toBeSaved);
-        return new ResponseModel(toBeSaved);
+        return ResponseModel.fromScheduleModel(toBeSaved);
     }
 
     private ResponseModel processUpdateRequest(final UpdateRequestModel request) {
-        return null;
+        final ScheduleModel updatedModel = request.getSchedule();
+        ScheduleModel toBeUpdated = db.findById(updatedModel.getId()).get();
+        if (toBeUpdated == null) {
+            return new ResponseModel();
+        } else {
+            updatedModel.setOwnerId(toBeUpdated.getOwnerId());
+            ScheduleModel check = db.save(updatedModel);
+            return ResponseModel.fromScheduleModel(check);
+        }
     }
 
     private String getIdBasedOnCurrentTime() {
