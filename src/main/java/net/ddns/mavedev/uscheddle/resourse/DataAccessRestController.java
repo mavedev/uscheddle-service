@@ -25,21 +25,10 @@ public class DataAccessRestController {
     @Autowired
     private SchedulesRepository db;
 
-    @RequestMapping(value = "/schedule/{id}", method = RequestMethod.GET)
-    public @ResponseBody ResponseEntity<ResponseModel> getSchedule(
-            @PathVariable(value = "id") final String id) {
-        ScheduleModel schedule = db.findById(id).get();
-        if (schedule == null) {
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new ResponseModel(null));
-        } else {
-            return ResponseEntity.ok(new ResponseModel(schedule));
-        }
-    }
-
     @RequestMapping(value = "/generate", method = RequestMethod.POST,
             consumes = {MediaType.APPLICATION_JSON_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE})
-    public @ResponseBody ResponseEntity<ResponseModel> generate(
+    public @ResponseBody ResponseEntity<ResponseModel> create(
             @RequestBody final GenerateRequestModel request) {
         if (!request.isValid()) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseModel(null));
@@ -50,6 +39,17 @@ public class DataAccessRestController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseModel(null));
         } else {
             return ResponseEntity.ok(response);
+        }
+    }
+
+    @RequestMapping(value = "/schedule/{id}", method = RequestMethod.GET)
+    public @ResponseBody ResponseEntity<ResponseModel> read(
+            @PathVariable(value = "id") final String id) {
+        ScheduleModel schedule = db.findById(id).get();
+        if (schedule == null) {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new ResponseModel(null));
+        } else {
+            return ResponseEntity.ok(new ResponseModel(schedule));
         }
     }
 
