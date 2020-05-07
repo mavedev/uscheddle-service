@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import net.ddns.mavedev.uscheddle.model.db.ScheduleModel;
 import net.ddns.mavedev.uscheddle.model.request.create.GenerateRequestModel;
+import net.ddns.mavedev.uscheddle.model.request.update.UpdateRequestModel;
 import net.ddns.mavedev.uscheddle.model.response.ResponseModel;
 import net.ddns.mavedev.uscheddle.repository.SchedulesRepository;
 
@@ -56,7 +57,8 @@ public class DataAccessRestController {
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.PUT,
             consumes = {MediaType.APPLICATION_JSON_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE})
-    public @ResponseBody ResponseEntity<ResponseModel> update() {
+    public @ResponseBody ResponseEntity<ResponseModel> update(
+            @RequestBody final UpdateRequestModel request) {
         return null;
     }
 
