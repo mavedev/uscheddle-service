@@ -1,5 +1,7 @@
 package net.ddns.mavedev.uscheddle.model.db;
 
+import java.util.Objects;
+import java.util.stream.Stream;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -17,11 +19,11 @@ public class ScheduleModel {
 
     @Id
     @JsonProperty("id")
-    private String id = "";
+    private String id;
     @JsonProperty("ownerId")
-    private String ownerId = "";
+    private String ownerId;
     @JsonProperty("name")
-    private String name = "";
+    private String name;
     @JsonProperty("mon")
     private String[] mon = new String[6];
     @JsonProperty("tue")
@@ -39,6 +41,11 @@ public class ScheduleModel {
         this.id = id;
         this.ownerId = ownerId;
         this.name = name;
+    }
+
+    public boolean isValid() {
+        return Stream.of(id, ownerId, name, mon, tue, wed, thu, fri, sat)
+                .noneMatch(Objects::isNull);
     }
 
 }
