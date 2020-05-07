@@ -15,10 +15,13 @@ public class GenerateRequestModel {
     @JsonProperty("name")
     private String name;
 
+    @JsonProperty("ownerId")
+    private String ownerId;
+
     @JsonProperty("courses")
     private CourseModel[] courses;
 
-    @JsonProperty("classes")
+    @JsonProperty("classrooms")
     private ClassroomModel[] classrooms;
 
     @JsonProperty("students")
