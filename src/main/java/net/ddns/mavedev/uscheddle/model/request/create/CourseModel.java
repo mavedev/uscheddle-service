@@ -1,4 +1,4 @@
-package net.ddns.mavedev.uscheddle.model.request;
+package net.ddns.mavedev.uscheddle.model.request.create;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
