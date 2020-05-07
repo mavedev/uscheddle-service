@@ -99,7 +99,7 @@ public class DataAccessRestController {
         final ScheduleModel updatedModel = request.getSchedule();
         ScheduleModel toBeUpdated = db.findById(updatedModel.getId()).get();
 
-        if (!updatedModel.getOwnerId().equals(toBeUpdated.getOwnerId())) {
+        if (!request.getSenderId().equals(toBeUpdated.getOwnerId())) {
             throw new SecurityException();
         }
 
