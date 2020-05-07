@@ -61,7 +61,7 @@ public class DataAccessRestController {
 
     private ResponseModel processGenerateRequest(final GenerateRequestModel request) {
         String generatedId = getIdBasedOnCurrentTime();
-        ScheduleModel toBeSaved = new ScheduleModel(generatedId);
+        ScheduleModel toBeSaved = new ScheduleModel(generatedId, "testOwner", "testName");
         db.save(toBeSaved);
         return new ResponseModel(toBeSaved.getId(), true);
     }
