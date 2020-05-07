@@ -14,7 +14,4 @@ public class ResponseModel {
     @JsonProperty("scheduleData")
     private ScheduleModel schedule;
 
-    @JsonProperty("editable")
-    private boolean editable;
-
 }

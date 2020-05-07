@@ -30,12 +30,11 @@ public class DataAccessRestController {
             @PathVariable(value = "id") final String id) {
         ScheduleModel schedule = db.findById(id).get();
         if (schedule == null) {
-            // return ResponseEntity.status(HttpStatus.NO_CONTENT)
-            // .body(new ResponseModel(null, false));
+            return ResponseEntity.status(HttpStatus.NO_CONTENT)
+                    .body(new ResponseModel(null, false));
         } else {
-            // return ResponseEntity.ok(new ResponseModel(schedule, true));
+            return ResponseEntity.ok(new ResponseModel(schedule, true));
         }
-        return null;
     }
 
     @RequestMapping(value = "/generate", method = RequestMethod.POST,
