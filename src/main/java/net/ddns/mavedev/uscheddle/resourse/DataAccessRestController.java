@@ -100,7 +100,19 @@ public class DataAccessRestController {
     public @ResponseBody ResponseEntity<ResponseModel> delete(
             @RequestBody final DeleteRequestModel request,
             @PathVariable(value = "id") final String id) {
-        return null;
+        ScheduleModel schedule = null;
+        try {
+            schedule = db.findById(id).get();
+        } catch (NoSuchElementException ex) {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(ResponseModel.empty());
+        }
+
+        if (!schedule.getOwnerId().equals(request.getSenderId())) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(ResponseModel.empty());
+        }
+
+        db.delete(schedule);
+        return ResponseEntity.ok(null);
     }
 
     private ResponseModel processGenerateRequest(final GenerateRequestModel request) {
