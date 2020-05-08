@@ -12,12 +12,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import net.ddns.mavedev.uscheddle.model.db.ScheduleModel;
 import net.ddns.mavedev.uscheddle.model.request.create.GenerateRequestModel;
 import net.ddns.mavedev.uscheddle.model.request.delete.DeleteRequestModel;
-import net.ddns.mavedev.uscheddle.model.request.read.ReadRequestModel;
 import net.ddns.mavedev.uscheddle.model.request.update.UpdateRequestModel;
 import net.ddns.mavedev.uscheddle.model.response.ResponseModel;
 import net.ddns.mavedev.uscheddle.repository.SchedulesRepository;
@@ -47,10 +47,9 @@ public class DataAccessRestController {
     }
 
     @RequestMapping(value = "/schedule/{id}", method = RequestMethod.GET,
-            consumes = {MediaType.APPLICATION_JSON_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE})
-    public @ResponseBody ResponseEntity<ResponseModel> read(@RequestBody ReadRequestModel request,
-            @PathVariable(value = "id") final String id) {
+    public @ResponseBody ResponseEntity<ResponseModel> read(
+            @PathVariable(value = "id") final String id, @RequestParam final String senderId) {
         ScheduleModel schedule = null;
         try {
             schedule = db.findById(id).get();
@@ -59,8 +58,7 @@ public class DataAccessRestController {
         }
 
         ResponseModel response = ResponseModel.fromScheduleModel(schedule);
-        return schedule.getOwnerId().equals(request.getSenderId())
-                ? ResponseEntity.ok(response.editable())
+        return schedule.getOwnerId().equals(senderId) ? ResponseEntity.ok(response.editable())
                 : ResponseEntity.ok(response);
     }
 
