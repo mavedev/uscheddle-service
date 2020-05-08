@@ -25,17 +25,17 @@ public class ScheduleModel {
     @JsonProperty("name")
     private String name;
     @JsonProperty("mon")
-    private String[] mon = new String[6];
+    private String[][] mon;
     @JsonProperty("tue")
-    private String[] tue = new String[6];
+    private String[][] tue;
     @JsonProperty("wed")
-    private String[] wed = new String[6];
+    private String[][] wed;
     @JsonProperty("thu")
-    private String[] thu = new String[6];
+    private String[][] thu;
     @JsonProperty("fri")
-    private String[] fri = new String[6];
+    private String[][] fri;
     @JsonProperty("sat")
-    private String[] sat = new String[6];
+    private String[][] sat;
 
     public ScheduleModel(final String id, final String ownerId, final String name) {
         this.id = id;

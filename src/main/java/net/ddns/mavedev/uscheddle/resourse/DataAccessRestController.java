@@ -54,7 +54,7 @@ public class DataAccessRestController {
         try {
             schedule = db.findById(id).get();
         } catch (NoSuchElementException ex) {
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(ResponseModel.empty());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ResponseModel.empty());
         }
 
         ResponseModel response = ResponseModel.fromScheduleModel(schedule);
@@ -79,7 +79,7 @@ public class DataAccessRestController {
         try {
             response = processUpdateRequest(request);
         } catch (NoSuchElementException ex) {
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(ResponseModel.empty());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ResponseModel.empty());
         } catch (SecurityException ex) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body(ResponseModel.empty());
         }
@@ -101,7 +101,7 @@ public class DataAccessRestController {
         try {
             schedule = db.findById(id).get();
         } catch (NoSuchElementException ex) {
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(ResponseModel.empty());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ResponseModel.empty());
         }
 
         if (!schedule.getOwnerId().equals(request.getSenderId())) {
