@@ -17,7 +17,7 @@ public class CourseModel {
     @JsonProperty("courseClassesType")
     private String classesType;
 
-    @JsonProperty("courseInstructor")
+    @JsonProperty("courseInstructors")
     private String[] instructor;
 
     @JsonProperty("courseHours")
