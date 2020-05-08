@@ -14,10 +14,10 @@ public class ClassroomModel {
     @JsonProperty("classroomNumber")
     private String number;
 
-    @JsonProperty("classroomType")
-    private String type;
+    @JsonProperty("isLectureSuitable")
+    private boolean isLectureSuitable;
 
     public boolean isValid() {
-        return this.number != null && this.type != null;
+        return this.number != null;
     }
 }
