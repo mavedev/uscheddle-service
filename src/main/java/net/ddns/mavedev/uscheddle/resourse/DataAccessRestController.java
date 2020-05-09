@@ -63,6 +63,24 @@ public class DataAccessRestController {
                 : ResponseEntity.ok(response);
     }
 
+    @RequestMapping(value = "/search/{name}", method = RequestMethod.GET,
+            produces = {MediaType.APPLICATION_JSON_VALUE})
+    public @ResponseBody ResponseEntity<IDNamePair[]> readAllByName(
+            @PathVariable(value = "name") final String id, @RequestParam final String name) {
+        ScheduleModel[] schedules = null;
+        try {
+            schedules = db.findByName(name);
+        } catch (NoSuchElementException ex) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new IDNamePair[0]);
+        }
+
+        IDNamePair[] idsAndNames = new IDNamePair[schedules.length];
+        for (int i = 0; i < idsAndNames.length; ++i) {
+            idsAndNames[i] = new IDNamePair(schedules[i].getId(), schedules[i].getName());
+        }
+        return ResponseEntity.ok(idsAndNames);
+    }
+
     @RequestMapping(value = "/schedules", method = RequestMethod.GET,
             produces = {MediaType.APPLICATION_JSON_VALUE})
     public @ResponseBody ResponseEntity<IDNamePair[]> readAllFromUser(
