@@ -35,6 +35,7 @@ public class DataAccessRestController {
     public @ResponseBody ResponseEntity<ResponseModel> create(
             @RequestBody final GenerateRequestModel request) {
         if (!request.isValid()) {
+            System.out.println("RRROOOO");
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ResponseModel.empty());
         }
 
