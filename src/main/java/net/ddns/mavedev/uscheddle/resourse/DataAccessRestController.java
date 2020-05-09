@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import net.ddns.mavedev.uscheddle.model.IDNamePair;
 import net.ddns.mavedev.uscheddle.model.db.ScheduleModel;
 import net.ddns.mavedev.uscheddle.model.request.create.GenerateRequestModel;
 import net.ddns.mavedev.uscheddle.model.request.update.UpdateRequestModel;
@@ -64,20 +65,20 @@ public class DataAccessRestController {
 
     @RequestMapping(value = "/schedules", method = RequestMethod.GET,
             produces = {MediaType.APPLICATION_JSON_VALUE})
-    public @ResponseBody ResponseEntity<String[]> readAllFromUser(
+    public @ResponseBody ResponseEntity<IDNamePair[]> readAllFromUser(
             @RequestHeader(value = "access-token") final String senderId) {
         ScheduleModel[] schedules = null;
         try {
             schedules = db.findByOwnerID(senderId);
         } catch (NoSuchElementException ex) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new String[0]);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new IDNamePair[0]);
         }
 
-        String[] ids = new String[schedules.length];
-        for (int i = 0; i < ids.length; ++i) {
-            ids[i] = schedules[i].getId();
+        IDNamePair[] idsAndNames = new IDNamePair[schedules.length];
+        for (int i = 0; i < idsAndNames.length; ++i) {
+            idsAndNames[i] = new IDNamePair(schedules[i].getId(), schedules[i].getName());
         }
-        return ResponseEntity.ok(ids);
+        return ResponseEntity.ok(idsAndNames);
     }
 
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.PUT,
