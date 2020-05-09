@@ -62,6 +62,17 @@ public class DataAccessRestController {
                 : ResponseEntity.ok(response);
     }
 
+    @RequestMapping(value = "/schedules", method = RequestMethod.GET,
+            produces = {MediaType.APPLICATION_JSON_VALUE})
+    public @ResponseBody ResponseEntity<ResponseModel> readAllFromUser(
+            @RequestHeader(value = "access-token") final String senderId) {
+        ScheduleModel[] schedule = null;
+        try {
+        } catch (NoSuchElementException ex) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ResponseModel.empty());
+        }
+    }
+
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.PUT,
             consumes = {MediaType.APPLICATION_JSON_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE})
