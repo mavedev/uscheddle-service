@@ -9,4 +9,7 @@ public interface SchedulesRepository extends MongoRepository<ScheduleModel, Stri
     @Query(value = "{ 'ownerId': ?0 }")
     public ScheduleModel[] findByOwnerID(final String ownerId);
 
+    @Query(value = "{ 'name': ?0 }")
+    public ScheduleModel[] findByName(final String name);
+
 }
