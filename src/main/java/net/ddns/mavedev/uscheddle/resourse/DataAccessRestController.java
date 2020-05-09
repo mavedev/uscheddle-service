@@ -64,13 +64,20 @@ public class DataAccessRestController {
 
     @RequestMapping(value = "/schedules", method = RequestMethod.GET,
             produces = {MediaType.APPLICATION_JSON_VALUE})
-    public @ResponseBody ResponseEntity<ResponseModel> readAllFromUser(
+    public @ResponseBody ResponseEntity<String[]> readAllFromUser(
             @RequestHeader(value = "access-token") final String senderId) {
-        ScheduleModel[] schedule = null;
+        ScheduleModel[] schedules = null;
         try {
+            schedules = db.findByOwnerID(senderId);
         } catch (NoSuchElementException ex) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ResponseModel.empty());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new String[0]);
         }
+
+        String[] ids = new String[schedules.length];
+        for (int i = 0; i < ids.length; ++i) {
+            ids[i] = schedules[i].getId();
+        }
+        return ResponseEntity.ok(ids);
     }
 
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.PUT,
