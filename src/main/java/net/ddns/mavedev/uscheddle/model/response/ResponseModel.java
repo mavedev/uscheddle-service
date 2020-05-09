@@ -2,6 +2,7 @@ package net.ddns.mavedev.uscheddle.model.response;
 
 import java.util.Objects;
 import java.util.stream.Stream;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -11,6 +12,9 @@ import net.ddns.mavedev.uscheddle.model.db.ScheduleModel;
 @AllArgsConstructor
 public class ResponseModel {
 
+    @JsonIgnore
+    private static final String[][] DUMMY_ARRAY = new String[0][0];
+
     @JsonProperty("id")
     private String id;
     @JsonProperty("name")
@@ -18,17 +22,17 @@ public class ResponseModel {
     @JsonProperty("editable")
     private boolean isEditable;
     @JsonProperty("mon")
-    private String[][] mon;
+    private String[][] mon = DUMMY_ARRAY;
     @JsonProperty("tue")
-    private String[][] tue;
+    private String[][] tue = DUMMY_ARRAY;
     @JsonProperty("wed")
-    private String[][] wed;
+    private String[][] wed = DUMMY_ARRAY;
     @JsonProperty("thu")
-    private String[][] thu;
+    private String[][] thu = DUMMY_ARRAY;
     @JsonProperty("fri")
-    private String[][] fri;
+    private String[][] fri = DUMMY_ARRAY;
     @JsonProperty("sat")
-    private String[][] sat;
+    private String[][] sat = DUMMY_ARRAY;
 
     private ResponseModel() {
     }
