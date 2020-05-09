@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -17,7 +18,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import net.ddns.mavedev.uscheddle.model.db.ScheduleModel;
 import net.ddns.mavedev.uscheddle.model.request.create.GenerateRequestModel;
-import net.ddns.mavedev.uscheddle.model.request.delete.DeleteRequestModel;
 import net.ddns.mavedev.uscheddle.model.request.update.UpdateRequestModel;
 import net.ddns.mavedev.uscheddle.model.response.ResponseModel;
 import net.ddns.mavedev.uscheddle.repository.SchedulesRepository;
@@ -93,10 +93,9 @@ public class DataAccessRestController {
     }
 
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE,
-            consumes = {MediaType.APPLICATION_JSON_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE})
     public @ResponseBody ResponseEntity<ResponseModel> delete(
-            @RequestBody final DeleteRequestModel request,
+            @RequestHeader(value = "access-token") final String senderId,
             @PathVariable(value = "id") final String id) {
         ScheduleModel schedule = null;
         try {
@@ -105,7 +104,7 @@ public class DataAccessRestController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ResponseModel.empty());
         }
 
-        if (!schedule.getOwnerId().equals(request.getSenderId())) {
+        if (!schedule.getOwnerId().equals(senderId)) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body(ResponseModel.empty());
         }
 
