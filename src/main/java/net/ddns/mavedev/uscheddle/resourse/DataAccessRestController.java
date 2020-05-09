@@ -63,10 +63,10 @@ public class DataAccessRestController {
                 : ResponseEntity.ok(response);
     }
 
-    @RequestMapping(value = "/search/{name}", method = RequestMethod.GET,
+    @RequestMapping(value = "/search", method = RequestMethod.GET,
             produces = {MediaType.APPLICATION_JSON_VALUE})
     public @ResponseBody ResponseEntity<IDNamePair[]> readAllByName(
-            @PathVariable(value = "name") final String id, @RequestParam final String name) {
+            @RequestParam(value = "name") final String id, @RequestParam final String name) {
         ScheduleModel[] schedules = null;
         try {
             schedules = db.findByName(name);
