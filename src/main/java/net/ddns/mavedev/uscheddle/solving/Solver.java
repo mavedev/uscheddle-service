@@ -15,18 +15,30 @@ public class Solver {
         int minInGroup = data.getMinInGroup();
         int weeks = 14; // TODO: get from data.
         CourseModel[] courses = data.getCourses();
-        List<InstructorObserver> instructors = new ArrayList<>();
         for (CourseModel course : courses) {
             String name = course.getName();
             boolean isLecture = course.getClassesType().equals("lecture");
             int meetingsPerWeek = (int) Math.ceil((double) (course.getHours() / weeks));
             int groupsAmount = course.getNStudents() / minInGroup;
-            ClassObserver aClass = new ClassObserver(name, meetingsPerWeek, isLecture);
-            for (String instructorName : course.getInstructors()) {
-
-            }
+            ClassObserver aClass =
+                    new ClassObserver(name, meetingsPerWeek, isLecture, groupsAmount, classesInDay);
         }
         return true;
+    }
+
+    private class InstructorSet {
+
+        private List<InstructorObserver> instructors = new ArrayList<>();
+        private int classesInDay;
+
+        public InstructorSet(final int classesInDay) {
+            this.classesInDay = classesInDay;
+        }
+
+        public void addInstructor(final String name) {
+            this.instructors.add(new InstructorObserver(classObservers, this.classesInDay));
+        }
+
     }
 
 }
