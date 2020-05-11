@@ -24,7 +24,7 @@ public class Solver {
             int meetingsPerWeek = (int) Math.ceil((double) (course.getHours() / weeks));
             int groupsAmount = course.getNStudents() / minInGroup;
             ClassObserver aClass =
-                    new ClassObserver(name, meetingsPerWeek, isLecture, groupsAmount, classesInDay);
+                    new ClassObserver(name, meetingsPerWeek, isLecture, classesInDay);
 
             String[] instructorNames = Arrays.copyOfRange(course.getInstructors(), 0, groupsAmount);
             for (String instructorName : instructorNames) {

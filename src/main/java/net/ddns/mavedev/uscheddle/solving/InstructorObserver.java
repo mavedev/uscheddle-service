@@ -9,7 +9,7 @@ public class InstructorObserver {
     @Getter
     private String name;
     @Getter
-    private List<ClassObserver> classObservers = new ArrayList<>();
+    private List<GroupObserver> groupObservers = new ArrayList<>();
     private StudyLoadObserver studyLoadObserver;
 
     public InstructorObserver(final String name, final int classesInDay) {
@@ -17,8 +17,8 @@ public class InstructorObserver {
         this.studyLoadObserver = new StudyLoadObserver(classesInDay);
     }
 
-    public void addClassObserver(final ClassObserver classObserver) {
-        this.classObservers.add(classObserver);
+    public void addClassObserver(final GroupObserver groupObserver) {
+        this.groupObservers.add(groupObserver);
     }
 
     public boolean isBusyAt(final int day, final int lessonOrderNumber) {
