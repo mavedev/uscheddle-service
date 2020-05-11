@@ -24,15 +24,15 @@ public class GenerateRequestModel {
     @JsonProperty("classrooms")
     private ClassroomModel[] classrooms;
 
-    @JsonProperty("students")
-    private int students;
+    @JsonProperty("classesInDay")
+    private int classesInDay;
 
     @JsonProperty("minInGroup")
     private int minInGroup;
 
     public boolean isValid() {
         return Arrays.stream(this.courses).allMatch(i -> i.isValid())
-                && Arrays.stream(this.classrooms).allMatch(i -> i.isValid()) && this.students > 0
-                && this.minInGroup > 0;
+                && Arrays.stream(this.classrooms).allMatch(i -> i.isValid())
+                && this.classesInDay > 0 && this.minInGroup > 0;
     }
 }

@@ -16,7 +16,7 @@ public class Solver {
     }
 
     public static ScheduleModel solve(final GenerateRequestModel data) {
-        int classesInDay = 7; // TODO: get from data;
+        int classesInDay = data.getClassesInDay();
         ScheduleModel schedule = new ScheduleModel();
         InstructorSet instructors = getRootObserverSet(data);
         ClassroomObserver[] classroomObservers = getClassroomObservers(data);
@@ -56,7 +56,7 @@ public class Solver {
     }
 
     private static InstructorSet getRootObserverSet(final GenerateRequestModel data) {
-        int classesInDay = 7; // TODO: get from data.
+        int classesInDay = data.getClassesInDay();
         int minInGroup = data.getMinInGroup();
         int weeks = 14; // TODO: get from data.
         CourseModel[] courses = data.getCourses();
@@ -93,8 +93,7 @@ public class Solver {
         ClassroomObserver[] classroomObservers = new ClassroomObserver[classrooms.length];
         for (int i = 0; i < classrooms.length; ++i) {
             classroomObservers[i] = new ClassroomObserver(classrooms[i].getNumber(),
-                    classrooms[i].isLectureSuitable(), 7 // TODO: get from data.
-            );
+                    classrooms[i].isLectureSuitable(), data.getClassesInDay());
         }
         return classroomObservers;
     }
@@ -138,7 +137,7 @@ public class Solver {
         classrooms[2] = new ClassroomModel("1-225", false);
         classrooms[3] = new ClassroomModel("1-226", true);
         GenerateRequestModel request =
-                new GenerateRequestModel("n1", "o1", courses, classrooms, 20, 10);
+                new GenerateRequestModel("n1", "o1", courses, classrooms, 7, 10);
         ScheduleModel schedule = solve(request);
         for (int i = 0; i < 6; ++i) {
             List<String[]> dayData = schedule.getDayData(i);
