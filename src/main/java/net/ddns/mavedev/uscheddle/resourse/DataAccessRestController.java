@@ -176,6 +176,6 @@ public class DataAccessRestController {
 
     private ScheduleModel getDummySchedule() {
         String generatedId = getIdBasedOnCurrentTime();
-        return new ScheduleModel(generatedId, "dummyOwner", "dummyName");
+        return null;
     }
 }

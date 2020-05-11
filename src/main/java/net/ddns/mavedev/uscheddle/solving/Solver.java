@@ -64,6 +64,13 @@ public class Solver {
                     new ClassObserver(name, meetingsPerWeek, isLecture, classesInDay);
 
             String[] instructorNames = Arrays.copyOfRange(course.getInstructors(), 0, groupsAmount);
+            int nameShift = 0;
+            for (int i = 0; i < instructorNames.length; ++i) {
+                if (instructorNames[i] == null) {
+                    instructorNames[i] = instructorNames[nameShift++];
+                }
+            }
+
             for (int i = 0; i < instructorNames.length; ++i) {
                 if (!instructors.has(instructorNames[i])) {
                     instructors.add(instructorNames[i]);
@@ -112,6 +119,22 @@ public class Solver {
             return optional.isPresent() ? optional.get() : null;
         }
 
+    }
+
+    public static void main(String[] args) {
+        CourseModel[] courses = new CourseModel[3];
+        courses[0] = new CourseModel("name1", "lecture", new String[] {"a"}, 20, 21);
+        courses[1] = new CourseModel("name1", "practice", new String[] {"a", "b"}, 20, 21);
+        courses[2] = new CourseModel("name3", "lecture", new String[] {"c"}, 20, 21);
+        ClassroomModel[] classrooms = new ClassroomModel[4];
+        classrooms[0] = new ClassroomModel("1-223", true);
+        classrooms[1] = new ClassroomModel("1-224", true);
+        classrooms[2] = new ClassroomModel("1-225", false);
+        classrooms[3] = new ClassroomModel("1-226", true);
+        GenerateRequestModel request =
+                new GenerateRequestModel("n1", "o1", courses, classrooms, 20, 10);
+        ScheduleModel schedule = solve(request);
+        System.out.println("Done");
     }
 
 }
