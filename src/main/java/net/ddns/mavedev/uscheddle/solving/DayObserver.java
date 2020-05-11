@@ -16,4 +16,8 @@ public class DayObserver {
         return new DayObserver(maxClassesPerDay);
     }
 
+    public boolean isTimeBusyAt(final int lessonOrderNumer) {
+        return this.classesPerDayFlags.get(lessonOrderNumer);
+    }
+
 }
