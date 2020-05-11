@@ -19,7 +19,7 @@ public class StudyLoadObserver {
     }
 
     public void makeBusyAt(final int day, final int lessonOrderNumber) {
-        //
+        this.dayObservers[day].setBusyAt(lessonOrderNumber);
     }
 
 }
