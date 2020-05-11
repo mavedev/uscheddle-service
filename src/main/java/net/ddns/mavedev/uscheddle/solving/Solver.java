@@ -35,8 +35,12 @@ public class Solver {
             this.classesInDay = classesInDay;
         }
 
-        public void addInstructor(final String name) {
-            this.instructors.add(new InstructorObserver(classObservers, this.classesInDay));
+        public void add(final String name) {
+            this.instructors.add(new InstructorObserver(this.classesInDay));
+        }
+
+        public boolean has(final String name) {
+            this.instructors.stream().filter(i -> i.getName().equals(name)).findAny();
         }
 
     }

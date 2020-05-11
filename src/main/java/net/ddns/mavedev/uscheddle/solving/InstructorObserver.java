@@ -7,10 +7,13 @@ import lombok.Getter;
 public class InstructorObserver {
 
     @Getter
+    private String name;
+    @Getter
     private List<ClassObserver> classObservers = new ArrayList<>();
     private StudyLoadObserver studyLoadObserver;
 
-    public InstructorObserver(final int classesInDay) {
+    public InstructorObserver(final String name, final int classesInDay) {
+        this.name = name;
         this.studyLoadObserver = new StudyLoadObserver(classesInDay);
     }
 
