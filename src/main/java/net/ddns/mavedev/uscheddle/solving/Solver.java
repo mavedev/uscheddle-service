@@ -20,7 +20,7 @@ public class Solver {
             String name = course.getName();
             boolean isLecture = course.getClassesType().equals("lecture");
             int meetingsPerWeek = (int) Math.ceil((double) (course.getHours() / weeks));
-            int groupsAmount = 
+            int groupsAmount = course.getNStudents() / minInGroup;
             ClassObserver aClass = new ClassObserver(name, meetingsPerWeek, isLecture);
             for (String instructorName : course.getInstructors()) {
 
