@@ -1,15 +1,20 @@
 package net.ddns.mavedev.uscheddle.solving;
 
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
 
+@Data
 @AllArgsConstructor
 public class ClassObserver {
 
-    @Getter
-    private int hours;
-    @Getter
+    private String name;
     private int unallocatedMeetingsPerWeek;
+    private boolean isLecture;
+    private GroupObserver[] groups;
+
+    public ClassObserver(final GroupObserver[] groups) {
+        this.groups = groups;
+    }
 
     public void allocateMeeting() {
         --this.unallocatedMeetingsPerWeek;

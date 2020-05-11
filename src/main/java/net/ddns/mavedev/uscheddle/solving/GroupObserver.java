@@ -6,14 +6,10 @@ public class GroupObserver {
 
     @Getter
     private int groupNumber;
-    @Getter
-    private ClassObserver classObserver;
     private StudyLoadObserver studyLoadObserver;
 
-    public GroupObserver(final int groupNumber, final ClassObserver classObserver,
-            final int classesInDay) {
+    public GroupObserver(final int groupNumber, final int classesInDay) {
         this.groupNumber = groupNumber;
-        this.classObserver = classObserver;
         this.studyLoadObserver = new StudyLoadObserver(classesInDay);
     }
 
