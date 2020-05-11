@@ -1,9 +1,7 @@
 package net.ddns.mavedev.uscheddle.solving;
 
 import java.util.BitSet;
-import lombok.Data;
 
-@Data
 public class DayObserver {
 
     private BitSet classesPerDayFlags;
