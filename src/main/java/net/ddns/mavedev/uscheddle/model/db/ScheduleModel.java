@@ -51,4 +51,24 @@ public class ScheduleModel {
         return Stream.of(id, name, mon, tue, wed, thu, fri, sat).noneMatch(Objects::isNull);
     }
 
+    @JsonIgnore
+    public List<String[]> getDayData(final int day) {
+        switch (day) {
+            case 0:
+                return this.mon;
+            case 1:
+                return this.tue;
+            case 2:
+                return this.wed;
+            case 3:
+                return this.thu;
+            case 4:
+                return this.fri;
+            case 5:
+                return this.sat;
+            default:
+                return null;
+        }
+    }
+
 }
