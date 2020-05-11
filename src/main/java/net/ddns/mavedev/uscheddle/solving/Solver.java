@@ -37,7 +37,9 @@ public class Solver {
                                     dayData.add(new String[] {String.valueOf(lessonOrder),
                                             group.getClassObserver().getName(),
                                             instructor.getName(),
-                                            String.valueOf(group.getGroupNumber()), "1 - 14",
+                                            String.valueOf(group.getGroupNumber()),
+                                            group.getClassObserver().isLecture() ? "lecture"
+                                                    : "practice",
                                             classroom.getNumber()});
                                     dayData.sort((a, b) -> a[0].compareTo(b[0]));
                                     group.getClassObserver().allocateMeeting();
@@ -58,7 +60,7 @@ public class Solver {
     private static InstructorSet getRootObserverSet(final GenerateRequestModel data) {
         int classesInDay = data.getClassesInDay();
         int minInGroup = data.getMinInGroup();
-        int weeks = 14; // TODO: get from data.
+        int weeks = data.getWeeks();
         CourseModel[] courses = data.getCourses();
         InstructorSet instructors = new InstructorSet(classesInDay);
         for (CourseModel course : courses) {
@@ -137,7 +139,7 @@ public class Solver {
         classrooms[2] = new ClassroomModel("1-225", false);
         classrooms[3] = new ClassroomModel("1-226", true);
         GenerateRequestModel request =
-                new GenerateRequestModel("n1", "o1", courses, classrooms, 7, 10);
+                new GenerateRequestModel("n1", "o1", courses, classrooms, 7, 14, 10);
         ScheduleModel schedule = solve(request);
         for (int i = 0; i < 6; ++i) {
             List<String[]> dayData = schedule.getDayData(i);

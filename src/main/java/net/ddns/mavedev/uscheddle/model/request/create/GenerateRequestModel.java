@@ -27,12 +27,15 @@ public class GenerateRequestModel {
     @JsonProperty("classesInDay")
     private int classesInDay;
 
+    @JsonProperty("weeks")
+    private int weeks;
+
     @JsonProperty("minInGroup")
     private int minInGroup;
 
     public boolean isValid() {
         return Arrays.stream(this.courses).allMatch(i -> i.isValid())
                 && Arrays.stream(this.classrooms).allMatch(i -> i.isValid())
-                && this.classesInDay > 0 && this.minInGroup > 0;
+                && this.classesInDay > 0 && this.weeks > 0 && this.minInGroup > 0;
     }
 }
