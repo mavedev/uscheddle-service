@@ -65,7 +65,7 @@ public class Solver {
         InstructorSet instructors = new InstructorSet(classesInDay);
         for (CourseModel course : courses) {
             String name = course.getName();
-            boolean isLecture = course.getClassesType().equals("lecture");
+            boolean isLecture = course.isLecture();
             int meetingsPerWeek = (int) Math.ceil((double) (course.getHours() / weeks));
             int groupsAmount = isLecture ? 1 : course.getNStudents() / minInGroup;
 
@@ -130,9 +130,9 @@ public class Solver {
 
     public static void main(String[] args) {
         CourseModel[] courses = new CourseModel[3];
-        courses[0] = new CourseModel("name1", "lecture", new String[] {"a"}, 20, 21);
-        courses[1] = new CourseModel("name1", "practice", new String[] {"a", "b"}, 20, 21);
-        courses[2] = new CourseModel("name3", "lecture", new String[] {"c"}, 20, 21);
+        courses[0] = new CourseModel("name1", true, new String[] {"a"}, 20, 21);
+        courses[1] = new CourseModel("name1", false, new String[] {"a", "b"}, 20, 21);
+        courses[2] = new CourseModel("name3", true, new String[] {"c"}, 20, 21);
         ClassroomModel[] classrooms = new ClassroomModel[4];
         classrooms[0] = new ClassroomModel("1-223", true);
         classrooms[1] = new ClassroomModel("1-224", true);

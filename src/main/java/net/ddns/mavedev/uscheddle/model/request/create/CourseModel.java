@@ -14,8 +14,8 @@ public class CourseModel {
     @JsonProperty("courseName")
     private String name;
 
-    @JsonProperty("courseClassesType")
-    private String classesType;
+    @JsonProperty("isLecture")
+    private boolean isLecture;
 
     @JsonProperty("courseInstructors")
     private String[] instructors;
@@ -27,7 +27,7 @@ public class CourseModel {
     private int nStudents;
 
     public boolean isValid() {
-        return this.name != null && this.classesType != null && this.instructors != null
-                && this.hours > 0 && this.nStudents > 0;
+        return this.name != null && this.instructors != null && this.hours > 0
+                && this.nStudents > 0;
     }
 }
