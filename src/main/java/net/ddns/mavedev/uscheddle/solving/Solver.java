@@ -13,6 +13,11 @@ public class Solver {
     }
 
     public static boolean solve(final GenerateRequestModel data) {
+
+        return true;
+    }
+
+    private InstructorSet getRootObserverSet(final GenerateRequestModel data) {
         int classesInDay = 7; // TODO: get from data.
         int minInGroup = data.getMinInGroup();
         int weeks = 14; // TODO: get from data.
@@ -27,14 +32,15 @@ public class Solver {
                     new ClassObserver(name, meetingsPerWeek, isLecture, classesInDay);
 
             String[] instructorNames = Arrays.copyOfRange(course.getInstructors(), 0, groupsAmount);
-            for (String instructorName : instructorNames) {
-                if (!instructors.has(instructorName)) {
-                    instructors.add(instructorName);
+            for (int i = 0; i < instructorNames.length; ++i) {
+                if (!instructors.has(instructorNames[i])) {
+                    instructors.add(instructorNames[i]);
                 }
-                instructors.getInstructor(instructorName).addClassObserver(aClass);
+                GroupObserver group = new GroupObserver(i + 1, aClass, classesInDay);
+                instructors.getInstructor(instructorNames[i]).addGroupObserver(group);
             }
         }
-        return true;
+        return instructors;
     }
 
     private static class InstructorSet {

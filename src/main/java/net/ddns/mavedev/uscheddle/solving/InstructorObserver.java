@@ -17,7 +17,7 @@ public class InstructorObserver {
         this.studyLoadObserver = new StudyLoadObserver(classesInDay);
     }
 
-    public void addClassObserver(final GroupObserver groupObserver) {
+    public void addGroupObserver(final GroupObserver groupObserver) {
         this.groupObservers.add(groupObserver);
     }
 
