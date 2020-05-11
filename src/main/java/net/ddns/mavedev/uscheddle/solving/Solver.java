@@ -40,6 +40,9 @@ public class Solver {
                                             String.valueOf(group.getGroupNumber()), "1 - 14",
                                             classroom.getNumber()});
                                     group.getClassObserver().allocateMeeting();
+                                    instructor.makeBusyAt(day, lessonOrder);
+                                    group.makeBusyAt(day, lessonOrder);
+                                    classroom.makeBusyAt(day, lessonOrder);
                                     break groupSatisfying;
                                 }
                             }
@@ -62,8 +65,6 @@ public class Solver {
             boolean isLecture = course.getClassesType().equals("lecture");
             int meetingsPerWeek = (int) Math.ceil((double) (course.getHours() / weeks));
             int groupsAmount = isLecture ? 1 : course.getNStudents() / minInGroup;
-            ClassObserver aClass =
-                    new ClassObserver(name, meetingsPerWeek, isLecture, classesInDay);
 
             String[] instructorNames = Arrays.copyOfRange(course.getInstructors(), 0, groupsAmount);
             int nameShift = 0;
@@ -77,7 +78,9 @@ public class Solver {
                 if (!instructors.has(instructorNames[i])) {
                     instructors.add(instructorNames[i]);
                 }
-                GroupObserver group = new GroupObserver(i + 1, aClass, classesInDay);
+                GroupObserver group = new GroupObserver(i + 1,
+                        new ClassObserver(name, meetingsPerWeek, isLecture, classesInDay),
+                        classesInDay);
                 instructors.getInstructor(instructorNames[i]).addGroupObserver(group);
             }
         }
