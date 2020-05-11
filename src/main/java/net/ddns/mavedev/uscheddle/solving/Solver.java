@@ -1,6 +1,7 @@
 package net.ddns.mavedev.uscheddle.solving;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import net.ddns.mavedev.uscheddle.model.request.create.CourseModel;
@@ -24,6 +25,14 @@ public class Solver {
             int groupsAmount = course.getNStudents() / minInGroup;
             ClassObserver aClass =
                     new ClassObserver(name, meetingsPerWeek, isLecture, groupsAmount, classesInDay);
+
+            String[] instructorNames = Arrays.copyOfRange(course.getInstructors(), 0, groupsAmount);
+            for (String instructorName : instructorNames) {
+                if (!instructors.has(instructorName)) {
+                    instructors.add(instructorName);
+                }
+                instructors.getInstructor(instructorName).addClassObserver(aClass);
+            }
         }
         return true;
     }
