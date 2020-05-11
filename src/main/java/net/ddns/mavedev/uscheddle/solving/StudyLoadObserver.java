@@ -14,4 +14,8 @@ public class StudyLoadObserver {
         }
     }
 
+    public boolean isTimeBusyAt(final int day, final int lessonOrderNumber) {
+        return this.dayObservers[day].isTimeBusyAt(lessonOrderNumer);
+    }
+
 }
