@@ -39,6 +39,7 @@ public class Solver {
                                             instructor.getName(),
                                             String.valueOf(group.getGroupNumber()), "1 - 14",
                                             classroom.getNumber()});
+                                    dayData.sort((a, b) -> a[0].compareTo(b[0]));
                                     group.getClassObserver().allocateMeeting();
                                     instructor.makeBusyAt(day, lessonOrder);
                                     group.makeBusyAt(day, lessonOrder);
