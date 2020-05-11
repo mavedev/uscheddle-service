@@ -21,4 +21,8 @@ public class ClassroomObserver {
         return this.studyLoadObserver.isTimeBusyAt(day, lessonOrderNumber);
     }
 
+    public void makeBusyAt(final int day, final int lessonOrderNumber) {
+        this.studyLoadObserver.makeBusyAt(day, lessonOrderNumber);
+    }
+
 }
