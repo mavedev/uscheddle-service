@@ -6,12 +6,12 @@ public class DayObserver {
 
     private BitSet classesPerDayFlags;
 
-    private DayObserver(final int maxClassesPerDay) {
-        this.classesPerDayFlags = new BitSet(maxClassesPerDay);
+    private DayObserver(final int classesInDay) {
+        this.classesPerDayFlags = new BitSet(classesInDay);
     }
 
-    public static DayObserver fromMaxClassesPerDay(final int maxClassesPerDay) {
-        return new DayObserver(maxClassesPerDay);
+    public static DayObserver fromMaxClassesPerDay(final int classesInDay) {
+        return new DayObserver(classesInDay);
     }
 
     public boolean isTimeBusyAt(final int lessonOrderNumber) {

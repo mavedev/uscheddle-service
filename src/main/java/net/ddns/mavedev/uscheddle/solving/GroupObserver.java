@@ -11,10 +11,10 @@ public class GroupObserver {
     private StudyLoadObserver studyLoadObserver;
 
     public GroupObserver(final int groupNumber, final ClassObserver classObserver,
-            final int maxClassesPerDay) {
+            final int classesInDay) {
         this.groupNumber = groupNumber;
         this.classObserver = classObserver;
-        this.studyLoadObserver = new StudyLoadObserver(maxClassesPerDay);
+        this.studyLoadObserver = new StudyLoadObserver(classesInDay);
     }
 
 }

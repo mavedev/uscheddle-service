@@ -8,9 +8,9 @@ public class StudyLoadObserver {
     private static int DAYS_IN_WEEK = 6;
     private DayObserver[] dayObservers = new DayObserver[DAYS_IN_WEEK];
 
-    public StudyLoadObserver(final int maxClassesPerDay) {
+    public StudyLoadObserver(final int classesInDay) {
         for (int i = 0; i < dayObservers.length; ++i) {
-            this.dayObservers[i] = DayObserver.fromMaxClassesPerDay(maxClassesPerDay);
+            this.dayObservers[i] = DayObserver.fromMaxClassesPerDay(classesInDay);
         }
     }
 
