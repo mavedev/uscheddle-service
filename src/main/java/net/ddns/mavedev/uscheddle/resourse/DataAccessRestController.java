@@ -22,6 +22,7 @@ import net.ddns.mavedev.uscheddle.model.request.create.GenerateRequestModel;
 import net.ddns.mavedev.uscheddle.model.request.update.UpdateRequestModel;
 import net.ddns.mavedev.uscheddle.model.response.ResponseModel;
 import net.ddns.mavedev.uscheddle.repository.SchedulesRepository;
+import net.ddns.mavedev.uscheddle.solving.Solver;
 
 @RestController
 @CrossOrigin
@@ -149,7 +150,10 @@ public class DataAccessRestController {
     }
 
     private ResponseModel processGenerateRequest(final GenerateRequestModel request) {
-        ScheduleModel toBeSaved = getDummySchedule();
+        ScheduleModel toBeSaved = Solver.solve(request);
+        toBeSaved.setId(getIdBasedOnCurrentTime());
+        toBeSaved.setOwnerId(request.getOwnerId());
+        toBeSaved.setName(request.getName());
         db.save(toBeSaved);
         return ResponseModel.fromScheduleModel(toBeSaved);
     }
@@ -172,10 +176,5 @@ public class DataAccessRestController {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MMdd-HHmm-ssSS");
         LocalDateTime now = LocalDateTime.now();
         return dtf.format(now);
-    }
-
-    private ScheduleModel getDummySchedule() {
-        String generatedId = getIdBasedOnCurrentTime();
-        return null;
     }
 }
