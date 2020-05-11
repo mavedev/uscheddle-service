@@ -2,6 +2,7 @@ package net.ddns.mavedev.uscheddle.solving;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import net.ddns.mavedev.uscheddle.model.request.create.CourseModel;
 import net.ddns.mavedev.uscheddle.model.request.create.GenerateRequestModel;
 
@@ -36,11 +37,19 @@ public class Solver {
         }
 
         public void add(final String name) {
-            this.instructors.add(new InstructorObserver(this.classesInDay));
+            this.instructors.add(new InstructorObserver(name, this.classesInDay));
         }
 
         public boolean has(final String name) {
-            this.instructors.stream().filter(i -> i.getName().equals(name)).findAny();
+            Optional<InstructorObserver> optional =
+                    this.instructors.stream().filter(i -> i.getName().equals(name)).findAny();
+            return optional.isPresent();
+        }
+
+        public InstructorObserver getInstructor(final String name) {
+            Optional<InstructorObserver> optional =
+                    this.instructors.stream().filter(i -> i.getName().equals(name)).findAny();
+            return optional.isPresent() ? optional.get() : null;
         }
 
     }
