@@ -18,4 +18,8 @@ public class DayObserver {
         return this.classesPerDayFlags.get(lessonOrderNumber);
     }
 
+    public void setBusyAt(final int lessonOrderNumber) {
+        this.classesPerDayFlags.set(lessonOrderNumber);
+    }
+
 }

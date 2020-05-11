@@ -24,7 +24,8 @@ public class Solver {
             for (GroupObserver group : instructor.getGroupObservers()) {
                 boolean isLectureSuitableNeeded = group.getClassObserver().isLecture();
                 while (group.getClassObserver().getUnallocatedMeetingsPerWeek() > 0) {
-                    for (ClassroomObserver classroom : Arrays.stream(classroomObservers)
+                    groupSatisfying: for (ClassroomObserver classroom : Arrays
+                            .stream(classroomObservers)
                             .filter(c -> c.isLectureSuitable() == isLectureSuitableNeeded)
                             .toArray(ClassroomObserver[]::new)) {
                         for (int day = 0; day < StudyLoadObserver.DAYS_IN_WEEK; ++day) {
@@ -39,6 +40,7 @@ public class Solver {
                                             String.valueOf(group.getGroupNumber()), "1 - 14",
                                             classroom.getNumber()});
                                     group.getClassObserver().allocateMeeting();
+                                    break groupSatisfying;
                                 }
                             }
                         }
@@ -59,7 +61,7 @@ public class Solver {
             String name = course.getName();
             boolean isLecture = course.getClassesType().equals("lecture");
             int meetingsPerWeek = (int) Math.ceil((double) (course.getHours() / weeks));
-            int groupsAmount = course.getNStudents() / minInGroup;
+            int groupsAmount = isLecture ? 1 : course.getNStudents() / minInGroup;
             ClassObserver aClass =
                     new ClassObserver(name, meetingsPerWeek, isLecture, classesInDay);
 
@@ -134,7 +136,13 @@ public class Solver {
         GenerateRequestModel request =
                 new GenerateRequestModel("n1", "o1", courses, classrooms, 20, 10);
         ScheduleModel schedule = solve(request);
-        System.out.println("Done");
+        for (int i = 0; i < 6; ++i) {
+            List<String[]> dayData = schedule.getDayData(i);
+            System.out.println(i);
+            for (String[] dayFields : dayData) {
+                System.out.println(Arrays.toString(dayFields));
+            }
+        }
     }
 
 }
