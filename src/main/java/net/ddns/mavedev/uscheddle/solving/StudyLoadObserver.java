@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class StudyLoadObserver {
 
-    private static int DAYS_IN_WEEK = 6;
+    public static int DAYS_IN_WEEK = 6;
     private DayObserver[] dayObservers = new DayObserver[DAYS_IN_WEEK];
 
     public StudyLoadObserver(final int classesInDay) {

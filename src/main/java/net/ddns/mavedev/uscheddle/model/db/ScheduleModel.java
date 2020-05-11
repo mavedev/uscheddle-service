@@ -1,5 +1,7 @@
 package net.ddns.mavedev.uscheddle.model.db;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -8,18 +10,13 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 @Data
 @ToString
-@NoArgsConstructor
 @AllArgsConstructor
 @Document(collection = "schedules")
 public class ScheduleModel {
-
-    @JsonIgnore
-    private static final String[][] DUMMY_ARRAY = new String[0][0];
 
     @Id
     @JsonProperty("id")
@@ -29,22 +26,25 @@ public class ScheduleModel {
     @JsonProperty("name")
     private String name;
     @JsonProperty("mon")
-    private String[][] mon = DUMMY_ARRAY;
+    private List<String[]> mon;
     @JsonProperty("tue")
-    private String[][] tue = DUMMY_ARRAY;
+    private List<String[]> tue;
     @JsonProperty("wed")
-    private String[][] wed = DUMMY_ARRAY;
+    private List<String[]> wed;
     @JsonProperty("thu")
-    private String[][] thu = DUMMY_ARRAY;
+    private List<String[]> thu;
     @JsonProperty("fri")
-    private String[][] fri = DUMMY_ARRAY;
+    private List<String[]> fri;
     @JsonProperty("sat")
-    private String[][] sat = DUMMY_ARRAY;
+    private List<String[]> sat;
 
-    public ScheduleModel(final String id, final String ownerId, final String name) {
-        this.id = id;
-        this.ownerId = ownerId;
-        this.name = name;
+    public ScheduleModel() {
+        this.mon = new ArrayList<String[]>();
+        this.tue = new ArrayList<String[]>();
+        this.wed = new ArrayList<String[]>();
+        this.thu = new ArrayList<String[]>();
+        this.fri = new ArrayList<String[]>();
+        this.sat = new ArrayList<String[]>();
     }
 
     public boolean isValid() {

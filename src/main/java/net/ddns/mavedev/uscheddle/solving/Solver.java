@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import lombok.Getter;
+import net.ddns.mavedev.uscheddle.model.db.ScheduleModel;
 import net.ddns.mavedev.uscheddle.model.request.create.ClassroomModel;
 import net.ddns.mavedev.uscheddle.model.request.create.CourseModel;
 import net.ddns.mavedev.uscheddle.model.request.create.GenerateRequestModel;
@@ -15,11 +16,26 @@ public class Solver {
     }
 
     public static void solve(final GenerateRequestModel data) {
+        int classesInDay = 7; // TODO: get from data;
+        ScheduleModel schedule = new ScheduleModel();
         InstructorSet instructors = getRootObserverSet(data);
-        ClassroomObserver[] classroomObservers = data.getClassrooms();
+        ClassroomObserver[] classroomObservers = getClassroomObservers(data);
         for (InstructorObserver instructor : instructors.getInstructors()) {
             for (GroupObserver group : instructor.getGroupObservers()) {
+                boolean isLectureSuitableNeeded = group.getClassObserver().isLecture();
+                for (ClassroomObserver classroom : Arrays.stream(classroomObservers)
+                        .filter(c -> c.isLectureSuitable() == isLectureSuitableNeeded)
+                        .toArray(ClassroomObserver[]::new)) {
+                    for (int day = 0; day < StudyLoadObserver.DAYS_IN_WEEK; ++day) {
+                        for (int lessonOrder = 0; lessonOrder < classesInDay; ++lessonOrder) {
+                            if (!classroom.isBusyAt(day, lessonOrder)
+                                    && !group.isBusyAt(day, lessonOrder)
+                                    && !instructor.isBusyAt(day, lessonOrder)) {
 
+                            }
+                        }
+                    }
+                }
             }
         }
     }
@@ -50,7 +66,7 @@ public class Solver {
         return instructors;
     }
 
-    private ClassroomObserver[] getClassroomObservers(final GenerateRequestModel data) {
+    private static ClassroomObserver[] getClassroomObservers(final GenerateRequestModel data) {
         ClassroomModel[] classrooms = data.getClassrooms();
         ClassroomObserver[] classroomObservers = new ClassroomObserver[classrooms.length];
         for (int i = 0; i < classrooms.length; ++i) {
