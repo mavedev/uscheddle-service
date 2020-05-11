@@ -17,4 +17,8 @@ public class GroupObserver {
         this.studyLoadObserver = new StudyLoadObserver(classesInDay);
     }
 
+    public boolean isBusyAt(final int day, final int lessonOrderNumber) {
+        return this.studyLoadObserver.isTimeBusyAt(day, lessonOrderNumber);
+    }
+
 }
