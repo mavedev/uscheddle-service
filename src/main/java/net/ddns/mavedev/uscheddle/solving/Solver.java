@@ -16,6 +16,7 @@ public class Solver {
         int minInGroup = data.getMinInGroup();
         int weeks = 14; // TODO: get from data.
         CourseModel[] courses = data.getCourses();
+        InstructorSet instructors = new InstructorSet(classesInDay);
         for (CourseModel course : courses) {
             String name = course.getName();
             boolean isLecture = course.getClassesType().equals("lecture");
@@ -27,7 +28,7 @@ public class Solver {
         return true;
     }
 
-    private class InstructorSet {
+    private static class InstructorSet {
 
         private List<InstructorObserver> instructors = new ArrayList<>();
         private int classesInDay;
