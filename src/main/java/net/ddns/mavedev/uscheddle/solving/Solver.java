@@ -57,6 +57,17 @@ public class Solver {
         return schedule;
     }
 
+    private static void processParticipants(final ScheduleModel schedule,
+            final ClassroomObserver classroom, final GroupObserver group,
+            final InstructorObserver instructor, final int day, final int lessonOrder) {
+        List<String[]> dayData = schedule.getDayData(day);
+        dayData.sort((a, b) -> a[0].compareTo(b[0]));
+        group.getClassObserver().allocateMeeting();
+        instructor.makeBusyAt(day, lessonOrder);
+        group.makeBusyAt(day, lessonOrder);
+        classroom.makeBusyAt(day, lessonOrder);
+    }
+
     private static InstructorSet getRootObserverSet(final GenerateRequestModel data) {
         int classesInDay = data.getClassesInDay();
         int minInGroup = data.getMinInGroup();
