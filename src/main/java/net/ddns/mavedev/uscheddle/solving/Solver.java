@@ -57,6 +57,16 @@ public class Solver {
         return schedule;
     }
 
+    private static void fillDayData(final ScheduleModel schedule, final ClassroomObserver classroom,
+            final GroupObserver group, final InstructorObserver instructor, final int day,
+            final int lessonOrder) {
+        List<String[]> dayData = schedule.getDayData(day);
+        dayData.add(new String[] {String.valueOf(lessonOrder), group.getClassObserver().getName(),
+                instructor.getName(), String.valueOf(group.getGroupNumber()),
+                group.getClassObserver().isLecture() ? "lecture" : "practice",
+                classroom.getNumber()});
+    }
+
     private static void processParticipants(final ScheduleModel schedule,
             final ClassroomObserver classroom, final GroupObserver group,
             final InstructorObserver instructor, final int day, final int lessonOrder) {
