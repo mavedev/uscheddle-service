@@ -181,26 +181,4 @@ public class Solver {
 
     }
 
-    public static void main(String[] args) {
-        CourseModel[] courses = new CourseModel[3];
-        courses[0] = new CourseModel("name1", true, new String[] {"a"}, 20, 21);
-        courses[1] = new CourseModel("name1", false, new String[] {"a", "b"}, 20, 21);
-        courses[2] = new CourseModel("name3", true, new String[] {"c"}, 20, 21);
-        ClassroomModel[] classrooms = new ClassroomModel[4];
-        classrooms[0] = new ClassroomModel("1-223", true);
-        classrooms[1] = new ClassroomModel("1-224", true);
-        classrooms[2] = new ClassroomModel("1-225", false);
-        classrooms[3] = new ClassroomModel("1-226", true);
-        GenerateRequestModel request =
-                new GenerateRequestModel("n1", "o1", courses, classrooms, 7, 14, 10);
-        ScheduleModel schedule = solve(request);
-        for (int i = 0; i < 6; ++i) {
-            List<String[]> dayData = schedule.getDayData(i);
-            System.out.println(i);
-            for (String[] dayFields : dayData) {
-                System.out.println(Arrays.toString(dayFields));
-            }
-        }
-    }
-
 }
