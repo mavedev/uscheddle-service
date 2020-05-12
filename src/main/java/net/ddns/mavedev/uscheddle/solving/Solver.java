@@ -21,38 +21,7 @@ public class Solver {
         InstructorSet instructors = getRootObserverSet(data);
         ClassroomObserver[] classroomObservers = getClassroomObservers(data);
         for (InstructorObserver instructor : instructors.getInstructors()) {
-            for (GroupObserver group : instructor.getGroupObservers()) {
-                boolean isLectureSuitableNeeded = group.getClassObserver().isLecture();
-                while (group.getClassObserver().getUnallocatedMeetingsPerWeek() > 0) {
-                    groupSatisfying: for (ClassroomObserver classroom : Arrays
-                            .stream(classroomObservers)
-                            .filter(c -> c.isLectureSuitable() == isLectureSuitableNeeded)
-                            .toArray(ClassroomObserver[]::new)) {
-                        for (int day = 0; day < StudyLoadObserver.DAYS_IN_WEEK; ++day) {
-                            for (int lessonOrder = 0; lessonOrder < classesInDay; ++lessonOrder) {
-                                if (!classroom.isBusyAt(day, lessonOrder)
-                                        && !group.isBusyAt(day, lessonOrder)
-                                        && !instructor.isBusyAt(day, lessonOrder)) {
-                                    List<String[]> dayData = schedule.getDayData(day);
-                                    dayData.add(new String[] {String.valueOf(lessonOrder),
-                                            group.getClassObserver().getName(),
-                                            instructor.getName(),
-                                            String.valueOf(group.getGroupNumber()),
-                                            group.getClassObserver().isLecture() ? "lecture"
-                                                    : "practice",
-                                            classroom.getNumber()});
-                                    dayData.sort((a, b) -> a[0].compareTo(b[0]));
-                                    group.getClassObserver().allocateMeeting();
-                                    instructor.makeBusyAt(day, lessonOrder);
-                                    group.makeBusyAt(day, lessonOrder);
-                                    classroom.makeBusyAt(day, lessonOrder);
-                                    break groupSatisfying;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
+            interrogateGroups(schedule, instructor, classroomObservers, classesInDay);
         }
         return schedule;
     }
