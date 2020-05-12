@@ -57,6 +57,21 @@ public class Solver {
         return schedule;
     }
 
+    private static boolean tryToFillNonBusyTime(final ScheduleModel schedule,
+            final ClassroomObserver classroom, final GroupObserver group,
+            final InstructorObserver instructor, final int classesInDay) {
+        for (int day = 0; day < StudyLoadObserver.DAYS_IN_WEEK; ++day) {
+            for (int lessonOrder = 0; lessonOrder < classesInDay; ++lessonOrder) {
+                if (checkAreNotBusy(schedule, classroom, group, instructor, day, lessonOrder)) {
+                    fillDayData(schedule, classroom, group, instructor, day, lessonOrder);
+                    processParticipants(schedule, classroom, group, instructor, day, lessonOrder);
+                    return true; // Success.
+                }
+            }
+        }
+        return false; // Fail.
+    }
+
     private static boolean checkAreNotBusy(final ScheduleModel schedule,
             final ClassroomObserver classroom, final GroupObserver group,
             final InstructorObserver instructor, final int day, final int lessonOrder) {
