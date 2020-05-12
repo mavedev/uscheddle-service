@@ -57,6 +57,23 @@ public class Solver {
         return schedule;
     }
 
+    private static void interrogateClassrooms(final ScheduleModel schedule,
+            final InstructorObserver instructor, final GroupObserver group,
+            final ClassroomObserver[] classrooms, final boolean isLectureSuitableNeeded,
+            final int classesInDay) {
+        while (group.getClassObserver().getUnallocatedMeetingsPerWeek() > 0) {
+            for (ClassroomObserver classroom : Arrays.stream(classrooms)
+                    .filter(c -> c.isLectureSuitable() == isLectureSuitableNeeded)
+                    .toArray(ClassroomObserver[]::new)) {
+                boolean hasFound =
+                        tryToFillNonBusyTime(schedule, classroom, group, instructor, classesInDay);
+                if (hasFound) {
+                    break;
+                }
+            }
+        }
+    }
+
     private static boolean tryToFillNonBusyTime(final ScheduleModel schedule,
             final ClassroomObserver classroom, final GroupObserver group,
             final InstructorObserver instructor, final int classesInDay) {
