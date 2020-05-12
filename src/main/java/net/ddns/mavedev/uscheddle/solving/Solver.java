@@ -57,6 +57,16 @@ public class Solver {
         return schedule;
     }
 
+    private static void interrogateGroups(final ScheduleModel schedule,
+            final InstructorObserver instructor, final ClassroomObserver[] classroomObservers,
+            final int classesInDay) {
+        for (GroupObserver group : instructor.getGroupObservers()) {
+            boolean isLectureSuitableNeeded = group.getClassObserver().isLecture();
+            interrogateClassrooms(schedule, instructor, group, classroomObservers,
+                    isLectureSuitableNeeded, classesInDay);
+        }
+    }
+
     private static void interrogateClassrooms(final ScheduleModel schedule,
             final InstructorObserver instructor, final GroupObserver group,
             final ClassroomObserver[] classrooms, final boolean isLectureSuitableNeeded,
