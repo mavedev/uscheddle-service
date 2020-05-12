@@ -23,6 +23,8 @@ public class Solver {
         for (InstructorObserver instructor : instructors.getInstructors()) {
             interrogateGroups(schedule, instructor, classroomObservers, classesInDay);
         }
+
+        addFillers(schedule, classesInDay);
         return schedule;
     }
 
@@ -137,6 +139,18 @@ public class Solver {
                     classrooms[i].isLectureSuitable(), data.getClassesInDay());
         }
         return classroomObservers;
+    }
+
+    private static void addFillers(final ScheduleModel schedule, final int classesInDay) {
+        for (int day = 0; day < StudyLoadObserver.DAYS_IN_WEEK; ++day) {
+            List<String[]> dayData = schedule.getDayData(day);
+            int sizeDiff = 0;
+            if ((sizeDiff = dayData.size() - classesInDay) < 0) {
+                for (int i = 0; i < Math.abs(sizeDiff); ++i) {
+                    dayData.add(new String[] {"", "", "", "", "", ""});
+                }
+            }
+        }
     }
 
     private static class InstructorSet {
