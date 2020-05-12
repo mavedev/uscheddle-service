@@ -57,6 +57,13 @@ public class Solver {
         return schedule;
     }
 
+    private static boolean checkAreNotBusy(final ScheduleModel schedule,
+            final ClassroomObserver classroom, final GroupObserver group,
+            final InstructorObserver instructor, final int day, final int lessonOrder) {
+        return !classroom.isBusyAt(day, lessonOrder) && !group.isBusyAt(day, lessonOrder)
+                && !instructor.isBusyAt(day, lessonOrder);
+    }
+
     private static void fillDayData(final ScheduleModel schedule, final ClassroomObserver classroom,
             final GroupObserver group, final InstructorObserver instructor, final int day,
             final int lessonOrder) {
